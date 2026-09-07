@@ -1,0 +1,97 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Image Slider</title>
+
+<style>
+body{
+    height:100vh;
+    margin:0;
+    display:grid;
+    place-items:center;
+    background:#f3f4f6;
+}
+
+.slider{
+    position:relative;
+    width:600px;
+    height:350px;
+    overflow:hidden;
+    border-radius:10px;
+}
+
+.slider img{
+    position:absolute;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    opacity:0;
+}
+
+.slider img.active{
+    opacity:1;
+}
+
+button{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    z-index:2;
+    border:0;
+    border-radius:50%;
+    background:#0009;
+    color:white;
+    font-size:25px;
+    padding:8px 14px;
+    cursor:pointer;
+}
+
+.prev{
+    left:10px;
+}
+
+.next{
+    right:10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="slider">
+
+<img src="https://picsum.photos/id/1015/600/350" class="active">
+<img src="https://picsum.photos/id/1016/600/350">
+<img src="https://picsum.photos/id/1018/600/350">
+<img src="https://picsum.photos/id/1019/600/350">
+<img src="https://picsum.photos/id/1020/600/350">
+
+<button class="prev" onclick="prev()">←</button>
+<button class="next" onclick="next()">→</button>
+
+</div>
+
+<script>
+let imgs=document.querySelectorAll(".slider img"),i=0;
+
+function show(n){
+    imgs[i].classList.remove("active");
+    i=(n+imgs.length)%imgs.length;
+    imgs[i].classList.add("active");
+}
+
+function next(){
+    show(i+1);
+}
+
+function prev(){
+    show(i-1);
+}
+
+setInterval(next,3000);
+</script>
+
+</body>
+</html>
+

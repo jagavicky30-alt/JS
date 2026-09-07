@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Digital Clock</title>
+
+<style>
+body{
+    height:100vh;
+    margin:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#f2f2f2;
+    font-family:Arial;
+}
+#clock{
+    padding:20px 30px;
+    background:#222;
+    color:white;
+    font-size:48px;
+    border-radius:8px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="clock">00:00:00 AM</div>
+
+<script>
+function clock(){
+    let d=new Date(), h=d.getHours();
+    let p=h>=12?"PM":"AM";
+    h=h%12||12;
+
+    document.getElementById("clock").textContent=
+    String(h).padStart(2,"0")+":"+
+    String(d.getMinutes()).padStart(2,"0")+":"+
+    String(d.getSeconds()).padStart(2,"0")+" "+p;
+}
+
+clock();
+setInterval(clock,1000);
+</script>
+
+</body>
+</html>
+

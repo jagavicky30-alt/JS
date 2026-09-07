@@ -1,0 +1,162 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<title>To-Do List</title>
+
+<style>
+
+
+body {
+    font-family: Arial;
+    background: #eef2ff;
+    display: flex;
+    justify-content: center;
+    padding: 50px;
+}
+
+
+.box {
+    background: white;
+    padding: 25px;
+    width: 450px;
+    border-radius: 15px;
+}
+
+input {
+    padding: 12px;
+    width: 70%;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+button {
+    padding: 12px;
+    border: 0;
+    border-radius: 8px;
+    background: #6366f1;
+    color: white;
+}
+
+ul {
+    padding: 0;
+    list-style: none;
+}
+
+li {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+
+li span {
+    flex: 1;
+}
+
+
+.done {
+    text-decoration: line-through;
+    color: gray;
+}
+
+.del {
+    background: red;
+}
+
+#empty {
+    text-align: center;
+    color: gray;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<h2>✓ My To-Do List</h2>
+
+<input id="task" placeholder="Add a new task">
+<button onclick="add()">Add</button>
+
+<ul id="list"></ul>
+
+<p id="empty">No tasks yet!</p>
+
+<p id="count">0 tasks · 0 completed</p>
+
+</div>
+
+<script>
+
+let input = document.getElementById("task");
+let list = document.getElementById("list");
+let empty = document.getElementById("empty");
+let count = document.getElementById("count");
+
+function add() {
+
+    let text = input.value.trim();
+
+    if (text == "") return;
+
+    let li = document.createElement("li");
+
+    let check = document.createElement("button");
+    check.textContent = "✓";
+
+    let span = document.createElement("span");
+    span.textContent = text;
+
+    check.onclick = function() {
+        span.classList.toggle("done");
+        update();
+    };
+
+    let del = document.createElement("button");
+    del.textContent = "🗑";
+    del.className = "del";
+
+    del.onclick = function() {
+        li.remove();
+        update();
+    };
+
+    li.append(check, span, del);
+    list.appendChild(li);
+
+    input.value = "";
+    input.focus();
+
+    update();
+}
+
+function update() {
+
+    let total = list.children.length;
+    let done = list.querySelectorAll(".done").length;
+
+    count.textContent =
+        total + " task" + (total != 1 ? "s" : "") +
+        " · " + done + " completed";
+
+    empty.style.display = total ? "none" : "block";
+}
+
+input.onkeydown = function(e) {
+    if (e.key == "Enter")
+        add();
+};
+
+update();
+
+</script>
+
+</body>
+</html>
+```

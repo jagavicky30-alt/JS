@@ -1,0 +1,108 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<title>Stopwatch</title>
+
+<style>
+body{
+    font-family:Arial;
+    text-align:center;
+    background:#1e293b;
+    padding:50px;
+}
+.stopwatch{
+    background:white;
+    padding:30px;
+    width:350px;
+    margin:auto;
+    border-radius:15px;
+}
+#display{
+    font-size:40px;
+    font-weight:bold;
+    background:#f1f5f9;
+    padding:15px;
+    margin:20px 0;
+}
+button{
+    padding:10px 20px;
+    margin:5px;
+    border:0;
+    border-radius:8px;
+    color:white;
+    cursor:pointer;
+}
+#startBtn{background:green}
+#stopBtn{background:red}
+#resetBtn{background:#475569}
+</style>
+</head>
+
+<body>
+
+<div class="stopwatch">
+<h1>⏱ Stopwatch</h1>
+
+<div id="display">00:00:00.00</div>
+
+<button id="startBtn">Start</button>
+<button id="stopBtn" disabled>Stop</button>
+<button id="resetBtn">Reset</button>
+</div>
+
+<script>
+let display=document.getElementById("display"),
+    startBtn=document.getElementById("startBtn"),
+    stopBtn=document.getElementById("stopBtn"),
+    resetBtn=document.getElementById("resetBtn");
+
+let time=0, start=0, timer=null;
+
+function show(){
+    let t=time;
+    if(timer) t+=Date.now()-start;
+
+    let h=Math.floor(t/3600000);
+    let m=Math.floor(t%3600000/60000);
+    let s=Math.floor(t%60000/1000);
+    let ms=Math.floor(t%1000/10);
+
+    display.textContent=
+    [h,m,s].map(x=>String(x).padStart(2,"0")).join(":")
+    +"."+String(ms).padStart(2,"0");
+}
+
+startBtn.onclick=function(){
+    if(timer)return;
+    start=Date.now();
+    timer=setInterval(show,10);
+    startBtn.disabled=true;
+    stopBtn.disabled=false;
+};
+
+stopBtn.onclick=function(){
+    if(!timer)return;
+    time+=Date.now()-start;
+    clearInterval(timer);
+    timer=null;
+    show();
+    startBtn.disabled=false;
+    stopBtn.disabled=true;
+};
+
+resetBtn.onclick=function(){
+    clearInterval(timer);
+    timer=null;
+    time=0;
+    show();
+    startBtn.disabled=false;
+    stopBtn.disabled=true;
+};
+
+show();
+</script>
+
+</body>
+</html>
+```
